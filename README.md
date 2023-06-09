@@ -26,20 +26,39 @@ DATA_ANALYSER: runs on machine that analyses data in real-time (i.e., the Dell l
 ANALYSIS_LISTENER: runs on machine that runs presentation software (i.e., personal laptop)
 •	Listens for results from DATA_ANALYSER to inform experiment presentation (i.e., from PsychoPy)
 
+**Equipment Setup**
+1) Connect the neurofeedback and PsychoPy laptops to the two ethernet cables that are at the scanner. 
+2) Make sure the IP addresses are 192.168.2.5 for the neurofeedback laptop and 192.168.2.6 for the PsychoPy laptop. The scanner's IP address should always be 192.168.2.1. To check the IP address on Ubuntu, type: ```ifconfig``` and to check on Mac, type: ```ipconfig```.
+3) Have the MR tech connect the scanner to the neurofeedback laptop's samba share. From File Explorer, right-click on This PC, then select Add A Network Location. Follow the directions to enter the samba share address: //192.168.2.5/sambashare. When it asks for credentials, click on guest.
+• After it is set up once, you should be able to click on it in the left sidebar, but you may have to go through this setup again if it gets deleted from the scanner console. 
+
+**Scanning Protocol**
+1) The first task-based scan is the multi-source interference task (MSIT). The stimuli for this task will be presented using PsychoPy.
+To start the task:
+``` 
+conda activate rtcloud
+psychopy #start the task from the GUI
+```
+2) After the MSIT is a resting-state scan. During this time, run the MSIT ACC localizer script on the neurofeedback laptop:
+```
+python3 msit_acc_localizer.py {subject id}
+```
+• The MSIT will be repeated at the end, but you don't need to run this script the second time. 
+
+3) Neurofeedback scans (described below) 
+
 **Starting a Neurofeedback Session**
 1) Neurofeedback laptop: ``` sudo smbd nmbd start ```
-3) Personal laptop (Mac): Finder → Go → Connect to server → type “smb://192.168.2.5/rtsambashare” and connect → click “guest”
 
- • shortcut: cmd + k 
- 
- • since we are using an ethernet cord, the IP address shouldn’t change, but if you can’t connect, make sure you have the correct IP address by typing ifconfig on the Dell laptop
-3) Start DATA_ANALYSER on Dell: 
+2) Start DATA_ANALYSER on neurofeedback laptop: 
   ``` 
   PROJ_DIR=/home/rt/rtcloud-projects/adhd_rt/
   docker run -it –rm –link-local-ip=192.168.2.5 -p 8888:8888 -v ~/certs:/rtcloud/certs -v $PROJ_DIR:/rt-cloud/projects/adhd_rt brainiak/rtcloud:latest scripts/data_analyser.sh -p  
   adhd_rt –subjectRemote –dataRemote
   ```
-4) Start ANALYSIS_LISTENER on Macbook:
+• This should pop up a link that you can click on, which will bring you to the login page. Enter username and password, then, in the second tab, click "initialize session". Once this is done, you can start the run any time by clicking "run". The script will start when it sees the first Dicom image.
+
+4) Start ANALYSIS_LISTENER on PsychoPy laptop:
   ```
   WEB_IP=192.168.2.5
   conda activate rtcloud
@@ -49,8 +68,11 @@ ANALYSIS_LISTENER: runs on machine that runs presentation software (i.e., person
 5) Start PsychoPy on Macbook:
 • In a new terminal:
   ```
-  Conda activate rtcloud
+  conda activate rtcloud
   psychopy
   ```
-  •	run script from GUI
+•	Run the rt_feedback_single_roi.py script from the GUI.
+• Start the PsychoPy script first, then the rt-Cloud script. The PsychoPy script should be triggered by the first scanner pulse, and it should begin sending feedback as soon as it receives a json file with the neurofeedback score. 
+
+6) After all runs are finished, click "finalize session" in the web browser.
 
