@@ -11,6 +11,9 @@ If you publish work using this script the most relevant publication is:
 
 """
 
+# Comments throughout the script indicate where code can/should be changed. Unless noted,
+# avoid changing anything else.
+
 # --- Import packages ---
 import os
 import time
@@ -21,6 +24,7 @@ from psychopy.constants import (NOT_STARTED, STARTED, FINISHED)
 from psychopy.hardware import keyboard
 
 ## Specify analysis_listener outputs folder ##
+# Change to your own output path
 outPath = '/Users/julianawall/rt-cloud/outDir'
 
 # Ensure that relative paths start from the same directory as this script
@@ -28,6 +32,9 @@ _thisDir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(_thisDir)
 # Store info about the experiment session
 psychopyVersion = '2022.2.5'
+# Can change expName and/or expInfo if needed. expInfo is what pops up
+# in a dialog box at the beginning of the script, so anything that needs to be
+# changed for each participant, session, and/or run should be included here.
 expName = 'acc_feedback'  # from the Builder filename that created this script
 expInfo = {
     'participant': '',
@@ -66,14 +73,21 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 frameTolerance = 0.001  # how close to onset before 'same' frame
 
 # Start Code - component code to be run after the window creation
+
 # --- Setup the Window ---
+# You should change this code based on the specifics of your screen. You probably will only need to change 
+# size, pos, monitor, and potentially screen. Uncommented code should create a window that fits the Dell
+# monitors in room 410 and the LCD monitor at the scanner. The code that is commented out fits the screen 
+# of a 13" MacBook Pro. 
+# Note that you will need to set up a new monitor for the LCD in PsychoPy. Instructions here:
+# https://www.psychopy.org/builder/builderMonitors.html
 win = visual.Window(
     size=(1920, 1080),
-    #size=(1200, 800),  # MacBook size, for testing
+    #size=(1440, 900), #MacBook size
     fullscr=False, allowGUI=False, screen=1,
     allowStencil=False,
     monitor='Dell', color=[0, 0, 0], colorSpace='rgb', pos=[0, 180],
-    #pos=[50,0], #MacBook position, for testing,
+     #pos=[0,0], #MacBook position
     blendMode='avg', useFBO=True,
     units='height')
 win.mouseVisible = False
@@ -90,6 +104,7 @@ else:
 defaultKeyboard = keyboard.Keyboard(backend='event')
 
 # --- Initialize components for Routine "instructions" ---
+# Can change instructions as needed.
 instr_text = visual.TextStim(win=win, name='instr_text',
                              text='ATTENTION PRACTICE\nIn this run you will see two circles.\nThe blue circle represents the brain process that corresponds to attention.\nTry to move the white dot into that circle and keep it there for 5 sec!\nIf you succeed, the circle will shrink and the dot will move back to the center.\nHow much can you shrink the circle?\nThis experiment will last 5 min.\nPress any button to start.',
                              font='Open Sans',
@@ -119,12 +134,15 @@ cross = visual.ShapeStim(
 
 # --- Initialize components for Routine "feedback" ---
 # prepare the targets
+# Can change colors and/or roi_names_list, but you shouldn't need to.
 colors = ['blue', 'yellow', 'red', 'green', 'cyan',
           'magenta', 'black', 'honeydew', 'indigo', 'maroon']
 roi_names_list = ['acc']
 roi_values = []
 
 # target_positions:
+# roi_circle is the big circle that the participant is trying to move the ball into. 
+# You may want to edit the roi circle baseline position, size, and color. 
 baseline_pos = [0, 0]
 roi_circle_size = 0.75
 roi_circle_radius = roi_circle_size/2
@@ -132,6 +150,8 @@ roi_circle = visual.Circle(win, pos=(0, 0.70), radius=roi_circle_radius, fillCol
                            lineColor=colors[0], units='norm', size=(roi_circle_size*aspect_ratio, roi_circle_size))
 in_target_counter = 0
 
+# FeedbackCircle is the ball that moves based on BOLD activity.
+# Again, you may want to change the size, baseline position, and/or color.
 FeedbackCircle_X = 0
 FeedbackCircle_Y = 0
 FeedbackCircle_size = 0.35
@@ -144,13 +164,14 @@ FeedbackCircle = visual.Circle(win,
                                units='norm',
                                size=(FeedbackCircle_size*aspect_ratio, FeedbackCircle_size))
 
-
+# Calculates whether the ball is inside the target circle
 def in_circle(center_x, center_y, radius, x, y):
     square_dist = (center_x - x) ** 2 + (center_y - y) ** 2
     return square_dist <= radius ** 2
 
 
 # --- Initialize components for Routine "finish" ---
+# Can change this if you want.
 finish_text = visual.TextStim(win=win, name='finish_text',
                               text='Thank You!',
                               font='Open Sans',
@@ -224,7 +245,8 @@ while continueRoutine:
         win.callOnFlip(instr_key_resp.clearEvents, eventType='keyboard')
     if instr_key_resp.status == STARTED and not waitOnFlip:
         theseKeys = instr_key_resp.getKeys(
-            keyList=['a', 'b', 'c', 'd'], waitRelease=False)
+            keyList=['a', 'b', 'c', 'd'], waitRelease=False) # Participant needs to press any button to start the next step of the script.
+            # If testing away from scanner, you can press any of the keys above to continue.
         _instr_key_resp_allKeys.extend(theseKeys)
         if len(_instr_key_resp_allKeys):
             # just the last key pressed
@@ -313,6 +335,9 @@ while continueRoutine:
         # clear events on next screen flip
         win.callOnFlip(trigger_key_resp.clearEvents, eventType='keyboard')
     if trigger_key_resp.status == STARTED and not waitOnFlip:
+        # If any of these buttons are pressed, the task will start. At BCH, the scanner
+        # pulse maps to 't', but other common mappings are included here as well. 
+        # Be careful not to hit any of these buttons on your keyboard during a scan.
         theseKeys = trigger_key_resp.getKeys(
             keyList=['num_add', 't', '+', '5', 's'], waitRelease=False)
         _trigger_key_resp_allKeys.extend(theseKeys)
@@ -395,7 +420,8 @@ timeToFirstFrame = win.getFutureFlipTime(clock="now")
 frameN = -1
 
 # --- Run Routine "fixation" ---
-while continueRoutine and routineTimer.getTime() < 10.0:
+# Can change duration of fixation
+while continueRoutine and routineTimer.getTime() < 30.0:
     # get current time
     t = routineTimer.getTime()
     tThisFlip = win.getFutureFlipTime(clock=routineTimer)
@@ -465,9 +491,18 @@ activity = 0
 continueRoutine = True
 
 print("ready to start feedback!")
+
+# Important: Make sure you enter the correct number of runs,
+# and the start/end TRs. The code will keep looking for a run/TR 
+# until it finds it, so it will run indefinitely if the file
+# doesn't exist.  ** It may be worth adding some code to move on to 
+# the next section if no file is found for 15-20 seconds (after the 
+# first TR is found).
 for run in range(1, numRuns+1):
     for TR in range(starting_TR, end_TR+1):
-        filename = f'{outPath}/run{run}_TR{TR}.json'
+        filename = f'{outPath}/run{run}_TR{TR}.json' # Your files from the data analyser computer 
+        # should be named like this as the code is written. However, if you do change the filename 
+        # in the adhd_rt.py script or config file, make sure to also change it here.
         # Wait for file to be synced
         while not os.path.exists(filename):
             keys_pressed = event.getKeys()
@@ -475,22 +510,29 @@ for run in range(1, numRuns+1):
                 core.quit()  # allow escape key to quit experiment
             time.sleep(.1)  # retry every 100ms
         time.sleep(.1)  # buffer to prevent opening file before fully saved
-
+        
+        # Load json file with neurofeedback score, and round the value to 
+        # two decimal places.
         with open(filename, encoding="utf-8") as f:
             results = json.load(f)
-        roi_value = np.round(float(results['values']), 2)
+        roi_value = np.round(float(results['values']), 2) 
 
         cursor_position = np.dot(0, roi_value)
         
         print("TR", TR, "new x:", roi_value)
-        # Set the new position of the stimulus
+        # Set the new position of the ball based on the NF score.
         FeedbackCircle.setPos([0, roi_value])
 
+        # Count the number of times a ball has been in the circle.
         if in_circle(roi_circle.pos[0], roi_circle.pos[1], roi_circle.radius, FeedbackCircle.pos[0], FeedbackCircle.pos[1]) == True:
             in_target_counter = in_target_counter+1
         else:
             in_target_counter = in_target_counter
-
+        
+        # If the ball has reached the circle 5 times, send the ball to the baseline position
+        # and shrink the target circle by 10%. Same thing when it reaches 10 times (25%) and 
+        # 20 times (50%). You can change these values if you want. Right now, the size of the
+        # ball will not change, but if you want to shrink it as well, you can uncomment the code.
         if in_target_counter == 5:
             roi_circle.radius = roi_circle_radius - (0.1*roi_circle_radius)
             #FeedbackCircle.radius = FeedbackCircle_radius - (0.1*FeedbackCircle_radius)
@@ -555,6 +597,7 @@ timeToFirstFrame = win.getFutureFlipTime(clock="now")
 frameN = -1
 
 # --- Run Routine "fixation" ---
+# Again, you can change the duration of the fixation cross.
 while continueRoutine and routineTimer.getTime() < 30:
     # get current time
     t = routineTimer.getTime()
@@ -629,7 +672,8 @@ _timeToFirstFrame = win.getFutureFlipTime(clock="now")
 frameN = -1
 
 # --- Run Routine "finish" ---
-while continueRoutine and routineTimer.getTime() < 5.0:
+# You can also change the duration of the "thank you" slide.
+while continueRoutine and routineTimer.getTime() < 3.0:
     # get current time
     t = routineTimer.getTime()
     tThisFlip = win.getFutureFlipTime(clock=routineTimer)
@@ -684,7 +728,7 @@ for thisComponent in finishComponents:
 if routineForceEnded:
     routineTimer.reset()
 else:
-    routineTimer.addTime(-5.000000)
+    routineTimer.addTime(-3.000000)
 
 # --- End experiment ---
 # Flip one final time so any remaining win.callOnFlip()
