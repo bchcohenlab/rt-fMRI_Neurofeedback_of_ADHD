@@ -39,7 +39,7 @@ expName = 'acc_feedback'  # from the Builder filename that created this script
 expInfo = {
     'participant': '',
     'session': '001',
-    'numRuns': 2,
+    'numBlocks': 2,
     'run': '1',
     'starting_TR': 20,
     'end_TR': 300,
@@ -53,7 +53,7 @@ expInfo['expName'] = expName
 expInfo['psychopyVersion'] = psychopyVersion
 
 starting_TR = expInfo['starting_TR']
-numRuns = expInfo['numRuns']
+numBlocks = expInfo['numBlocks']
 end_TR = expInfo['end_TR']
 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
@@ -86,7 +86,7 @@ win = visual.Window(
     #size=(1440, 900), #MacBook size
     fullscr=False, allowGUI=False, screen=1,
     allowStencil=False,
-    monitor='Dell', color=[0, 0, 0], colorSpace='rgb', pos=[0, 180],
+    monitor='LCD', color=[0, 0, 0], colorSpace='rgb', pos=[0, 180],
      #pos=[0,0], #MacBook position
     blendMode='avg', useFBO=True,
     units='height')
@@ -533,17 +533,17 @@ for run in range(1, numRuns+1):
         # and shrink the target circle by 10%. Same thing when it reaches 10 times (25%) and 
         # 20 times (50%). You can change these values if you want. Right now, the size of the
         # ball will not change, but if you want to shrink it as well, you can uncomment the code.
-        if in_target_counter == 5:
+        if 5 <= in_target_counter < 10:
             roi_circle.radius = roi_circle_radius - (0.1*roi_circle_radius)
             #FeedbackCircle.radius = FeedbackCircle_radius - (0.1*FeedbackCircle_radius)
             FeedbackCircle.setPos([0, 0])
             FeedbackCircle.draw()
-        elif in_target_counter == 10:
+        elif 10 <= in_target_counter < 20:
             roi_circle.radius = roi_circle_radius - (0.25*roi_circle_radius)
             #FeedbackCircle.radius = FeedbackCircle_radius - (0.25*FeedbackCircle_radius)
             FeedbackCircle.setPos([0, 0])
             FeedbackCircle.draw()
-        elif in_target_counter == 20:
+        elif in_target_counter >= 20:
             roi_circle.radius = roi_circle_radius - (0.5*roi_circle_radius)
             #FeedbackCircle.radius = FeedbackCircle_radius - (0.5*FeedbackCircle_radius)
             FeedbackCircle.setPos([0, 0])
