@@ -1,3 +1,4 @@
+
 """-----------------------------------------------------------------------------
 --- IMAGING SEQUENCE -- 2 BROOKLINE PLACE, BCH---
 Scanning was acquired with a 3T Siemens Prisma MRI scanner. 
@@ -97,9 +98,9 @@ directories = []
 for entry in os.scandir(dicomParentPath):
     if entry.is_dir():
         directories.append(entry.path)
-        
+
+# Looks for the most recently created directory
 latest_directory = max(directories, key=os.path.getctime)
-print(latest_directory)
 
 dicomPath = os.path.join(dicomParentPath, latest_directory)
 print("Location of subject's dicoms: \n" + dicomPath + "\n")
@@ -107,9 +108,9 @@ print("Location of subject's dicoms: \n" + dicomPath + "\n")
 # add the path for the root directory to your python path
 sys.path.append(rootPath)
 
+# import rtCommon modules
 from rtCommon.utils import loadConfigFile, stringPartialFormat, findNewestFile
 from rtCommon.clientInterface import ClientInterface
-from rtCommon.imageHandling import readRetryDicomFromDataInterface, convertDicomImgToNifti, saveAsNiftiImage
 from rtCommon.bidsArchive import BidsArchive
 from rtCommon.bidsRun import BidsRun
 from bidsInterface import BidsInterface
@@ -127,7 +128,7 @@ args = argParser.parse_args(None)
 cfg = loadConfigFile(args.config)
 
 print(f"\n----Starting project: {cfg.title}----\n")
-
+# Load variables from config file
 # Prep starting run and scan number 
 # These are 1-indexed because that's how the DICOM file names are written
 # Note: cfg variables altered in web interface will be strings!
@@ -135,24 +136,23 @@ startRun = int(cfg.runNum[0])
 startBlock = 1
 numRuns = int(cfg.numRuns)
 num_TRs_per_run = int(cfg.num_total_TRs)
-num_TRs_per_block = 140
+num_TRs_per_block = int(cfg.num_TRs_per_block)
 rest_onset_TR = 1
-nf_onset_TR = 20
+nf_onset_TR = int(cfg.nf_onset_TR)
 numBlocks = int(cfg.numBlocks)
 disdaqs = cfg.disdaqs # num volumes at start of run to discard for MRI to reach steady state
-origScanNamePattern = '1.3.12.2.1107.5.2.43.166200.*'
+origScanNamePattern = cfg.origScanNamePattern
+sub_id = cfg.subjectNum
 
-# Load experimental design for participant.
-design = pd.read_csv(currPath+'/study_design/events.csv')
-block1_onset_tr=design['onset'][0]
-block2_onset_tr=design['onset'][1]
-block3_onset_tr=design['onset'][2]
-block4_onset_tr=design['onset'][3]
-block5_onset_tr=design['onset'][4]
+# Load experimental design for participant. To start, only the initial rest block is included. The design matrix will be updated after each TR after the first block. 
+dict = {'trial_type': ['rest'], 'onset': [1], 'duration': [19]}
+design = pd.DataFrame(dict)
     
-# load ACC template mask for analysis
-acc_mask = currPath+'/template_masks/acc_mni_bin.nii.gz'
+# If skipping localizer, load ACC template mask for analysis
+#acc_mask = currPath+'/template_masks/acc_mni_bin.nii.gz'
 
+# If using MSIT localizer, load ACC mask in subject space 
+acc_mask = currPath+'subjects'+f'sub-{sub_id}'+'acc_mask_subj_space.nii.gz'
 """-----------------------------------------------------------------------------
 The below section initiates the clientInterface that enables communication 
 between the three RTCloud components, which may be running on different 
@@ -168,7 +168,6 @@ dataInterface = clientInterfaces.dataInterface
 subjInterface = clientInterfaces.subjInterface
 webInterface  = clientInterfaces.webInterface
 bidsInterface = clientInterfaces.bidsInterface
-# archive = BidsArchive(tmpPath+'/bidsDataset')
 
 """====================REAL-TIME ANALYSIS GOES BELOW===================="""
 
@@ -179,7 +178,7 @@ except:
     pass
 
 # VNC Viewer: if on cloud server, use VNC to show GUIs in web interface (cannot use "--test" mode)
-Popen("DISPLAY=:1 fsleyes",shell=True) # can replace xeyes with any GUI (like fsleyes)
+Popen("DISPLAY=:1 fsleyes",shell=True) 
 
 class ImageProcessor:
     def __init__(self):
@@ -187,11 +186,9 @@ class ImageProcessor:
         self.tmpPath = tmpPath
     
     def rename_file(self, dicom_path):
-        # current_file = findNewestFile(dicomPath, origScanNamePattern) #actual 
-        current_file = findNewestFile('/home/rt/orig', origScanNamePattern) #testing
+        current_file = findNewestFile(dicomPath, origScanNamePattern) 
         new_filename = f"001_{curRun:06d}_{TR:06d}.dcm"
-        # source_file = os.path.join(dicomPath, current_file) #actual
-        #source_file = os.path.join('/home/rt/sambashare/orig', current_file) #testing
+        source_file = os.path.join(dicomPath, current_file)
         dest_file = os.path.join(dicom_path, new_filename)
         os.rename(current_file, dest_file)
         
@@ -205,26 +202,26 @@ class ImageProcessor:
         bl_imgs.append(img_data)
         bl_concat_data = np.concatenate(bl_imgs, axis=3)
         bl_concat_nifti = image.new_img_like(nifti, bl_concat_data)
-        print(bl_concat_data.shape)
+        print(bl_concat_data.shape) # check to make sure the images are being appended properly
         return bl_concat_data, bl_concat_nifti
     
     def incremental_GLM(self, TR,  design_matrix, img_data, baseline, mask_subj_space, previous_nii_data):
         masker = NiftiMasker(
             mask_img=mask_subj_space,
             smoothing_fwhm=None,
-            high_variance_confounds=True,
+            high_variance_confounds=True, # regress out things like WM and CSF
         )
         masker.fit()
         concatenated_data = np.concatenate([previous_nii_data, img_data], axis=3)
         concatenated_nifti = image.new_img_like(mask_subj_space, concatenated_data)
-        print(concatenated_nifti.shape)
-        confounds = pd.DataFrame(high_variance_confounds(concatenated_nifti, percentile=1))
+        print(concatenated_nifti.shape) # check to make sure the images are being appended properly
+        confounds = pd.DataFrame(high_variance_confounds(concatenated_nifti, percentile=1)) # regress out things like WM and CSF
         fmri_glm = FirstLevelModel(
             t_r=1.06,
             hrf_model='spm + derivative',
             mask_img=masker,
             smoothing_fwhm=6,
-            high_pass=1/240,
+            high_pass=1/240, 
             noise_model='ols',
             verbose=3,
             n_jobs=-2,
@@ -232,23 +229,21 @@ class ImageProcessor:
             minimize_memory=False,
         )
         fmri_glm.fit(concatenated_nifti, design_matrix, confounds=confounds)
-        current_resid = masker.fit_transform(fmri_glm.residuals[-1])
-        current_resid_mean = current_resid.mean()
+        current_resid = masker.fit_transform(fmri_glm.residuals[-1]) # residual for all voxels
+        current_resid_mean = current_resid.mean() # residual across entire ACC
         resid_list.append(current_resid_mean)
         nf_score_raw = np.mean(resid_list)
-        print(resid_list)
-        print(nf_score_raw)
         nf_scores.append(nf_score_raw)
         min_score = np.min(nf_scores)
         max_score = np.max(nf_scores)
         if nf_score_raw < min_score:
-            min_score = nf_score_raw
+            min_score = nf_score_raw 
         elif nf_score_raw > max_score:
             max_score = nf_score_raw
-        nf_score_norm = ((nf_score_raw - min_score) / (max_score - min_score)) * 2 - 1
+        nf_score_norm = ((nf_score_raw - min_score) / (max_score - min_score)) * 2 - 1 # norm nf_score_raw so that it is between -1 and 1
         print(f'Raw nf score at TR {TR}: {nf_score_raw}')
         print(f'Final NF score at TR {TR}: {nf_score_norm}')       
-        webInterface.plotDataPoint(runId=curRun,trId=TR, value=nf_score_norm)
+        webInterface.plotDataPoint(runId=curRun,trId=TR, value=nf_score_norm) #plot data point on web
         # Send the model outputs back to the computer running analysis_listener. 
         subjInterface.setResultDict(name=f'run{curRun}_TR{TR}',
                         values={'values': str(nf_score_norm)})
@@ -262,7 +257,6 @@ for curRun in range(startRun,numRuns):
     # "anonymize" removes participant specific fields from each DICOM header.
     if cfg.dsAccessionNumber=='None': 
         dicomScanNamePattern = stringPartialFormat(cfg.dicomNamePattern, 'RUN', curRun)
-        #dicomScanNamePattern = cfg.dicomNamePattern
         streamId = bidsInterface.initDicomBidsStream(dicomPath,dicomScanNamePattern,
                                                     cfg.minExpectedDicomSize, 
                                                     anonymize=True,
@@ -298,15 +292,20 @@ for curRun in range(startRun,numRuns):
             # rest block
             if rest_onset_TR<=TR<nf_onset_TR:
                 bl_data, bl_nifti = processor.get_bl_results(preprocessed_img, preprocessed_data)
+                # Make sure mask is in same space as baseline images (you should be able to skip this if using a subject-space mask to begin with)
                 if TR==nf_onset_TR-1:
-                    acc_mask_subj_space = image.resample_to_img(acc_mask, bl_nifti, interpolation='nearest')
+                    acc_mask_subj_space = image.resample_to_img(acc_mask, bl_nifti, interpolation='nearest') 
                 
             # neurofeedback block
             elif nf_onset_TR<=TR:
-                if curBlock == 1:
-                    nf_design_matrix = design.iloc[0:2]
-                elif curBlock == 2:
-                    nf_design_matrix = design.iloc[0, 3:4]
+                if nf_onset_TR == TR:
+                    design.loc[1] = ['nf', nf_onset_TR, 1] # adds new row to design data frame
+                    nf_design_matrix = design
+                    concatenated_nifti, concatenated_data = processor.incremental_GLM(TR, nf_design_matrix, preprocessed_data, bl_data, acc_mask_subj_space, previous_nii_data=bl_data)
+                else:
+                    design.at[1, 'duration'] = TR - num_rest_TRs # updates duration value to match current TR
+                    nf_design_matrix = design
+                    concatenated_nifti, concatenated_data = processor.incremental_GLM(TR, nf_design_matrix, preprocessed_data, bl_data, acc_mask_subj_space, previous_nii_data=concatenated_data)
                     
                 if TR==nf_onset_TR:
                     concatenated_nifti, concatenated_data = processor.incremental_GLM(TR, nf_design_matrix, preprocessed_data, bl_data, acc_mask_subj_space, previous_nii_data=bl_data)
