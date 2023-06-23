@@ -40,6 +40,7 @@ expInfo = {
     'participant': '',
     'session': '001',
     'numBlocks': 2,
+    'numRuns': 3,
     'run': '1',
     'starting_TR': 20,
     'end_TR': 300,
@@ -55,6 +56,7 @@ expInfo['psychopyVersion'] = psychopyVersion
 starting_TR = expInfo['starting_TR']
 numBlocks = expInfo['numBlocks']
 end_TR = expInfo['end_TR']
+numRuns = expInfo['numRuns']
 
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 filename = _thisDir + os.sep + \
@@ -99,6 +101,7 @@ if expInfo['frameRate'] != None:
     frameDur = 1.0 / round(expInfo['frameRate'])
 else:
     frameDur = 1.0 / 60.0  # could not measure, so guess
+
 
 # create a default keyboard (e.g. to check for escape)
 defaultKeyboard = keyboard.Keyboard(backend='event')
