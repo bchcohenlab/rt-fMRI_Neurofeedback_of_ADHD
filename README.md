@@ -27,7 +27,7 @@ ANALYSIS_LISTENER: runs on machine that runs presentation software (i.e., person
 
 # Equipment Setup
 ## Set up necessary connections
-1) Connect the neurofeedback and stimulus laptops to the two ethernet cables that are at the scanner. 
+1) Connect the neurofeedback and stimulus laptops to the two ethernet cables that are at the scanner. If you haven't set up the ethernet connections in the past, configure them manually in your laptop's settings, making sure the IP address is set to 192.168.2.6 and the net mask is 255.255.255.240.
 2) Make sure the IP addresses are 192.168.2.5 for the neurofeedback laptop and 192.168.2.6 for the stimulus laptop. The scanner's IP address should always be 192.168.2.1. To check the IP address on Ubuntu, type: ```ifconfig``` and to check on Mac, type: ```ipconfig```.
 3) Have the MR tech connect the scanner to the neurofeedback laptop's samba share. From File Explorer, right-click on This PC, then select Add A Network Location. Follow the directions to enter the samba share address: //192.168.2.5/sambashare. When it asks for credentials, click on guest.
 • After it is set up once, you should be able to click on it in the left sidebar, but you may have to go through this setup again if it gets deleted from the scanner console.
