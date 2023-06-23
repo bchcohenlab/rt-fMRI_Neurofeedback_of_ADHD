@@ -137,6 +137,7 @@ startBlock = 1
 numRuns = int(cfg.numRuns)
 num_TRs_per_run = int(cfg.num_total_TRs)
 num_TRs_per_block = int(cfg.num_TRs_per_block)
+num_rest_TRs = int(cfg.num_rest_TRs)
 rest_onset_TR = 1
 nf_onset_TR = int(cfg.nf_onset_TR)
 numBlocks = int(cfg.numBlocks)
@@ -151,7 +152,7 @@ design = pd.DataFrame(dict)
 #acc_mask = currPath+'/template_masks/acc_mni_bin.nii.gz'
 
 # If using MSIT localizer, load ACC mask in subject space 
-acc_mask = currPath+'subjects'+f'sub-{sub_id}'+'acc_mask_subj_space.nii.gz'
+acc_mask = os.path.join(currPath,'subjects',f'sub-{sub_id}','acc_mask_subj_space.nii.gz')
 """-----------------------------------------------------------------------------
 The below section initiates the clientInterface that enables communication 
 between the three RTCloud components, which may be running on different 
@@ -305,12 +306,7 @@ for curRun in range(startRun,numRuns):
                     design.at[1, 'duration'] = TR - num_rest_TRs # updates duration value to match current TR
                     nf_design_matrix = design
                     concatenated_nifti, concatenated_data = processor.incremental_GLM(TR, nf_design_matrix, preprocessed_data, bl_data, acc_mask_subj_space, previous_nii_data=concatenated_data)
-                    
-                if TR==nf_onset_TR:
-                    concatenated_nifti, concatenated_data = processor.incremental_GLM(TR, nf_design_matrix, preprocessed_data, bl_data, acc_mask_subj_space, previous_nii_data=bl_data)
-                else:
-                    concatenated_nifti, concatenated_data = processor.incremental_GLM(TR, nf_design_matrix, preprocessed_data, bl_data, acc_mask_subj_space, previous_nii_data=concatenated_data)
-        
+                 
     print(f"==END OF RUN {curRun}!==\n")
     archive.appendBidsRun(currentBidsRun)
     bidsInterface.closeStream(streamId)
