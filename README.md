@@ -29,9 +29,10 @@ ANALYSIS_LISTENER: runs on machine that runs presentation software (i.e., person
 ## Set up necessary connections
 1) Connect the neurofeedback and stimulus laptops to the two ethernet cables that are at the scanner. If you haven't set up the ethernet connections in the past, configure them manually in your laptop's settings, making sure the IP address is set to 192.168.2.6 and the net mask is 255.255.255.240.
 2) Make sure the IP addresses are 192.168.2.5 for the neurofeedback laptop and 192.168.2.6 for the stimulus laptop. The scanner's IP address should always be 192.168.2.1. To check the IP address on Ubuntu, type: ```ifconfig``` and to check on Mac, type: ```ipconfig```.
-3) Have the MR tech connect the scanner to the neurofeedback laptop's samba share. From File Explorer, right-click on This PC, then select Add A Network Location. Follow the directions to enter the samba share address: //192.168.2.5/sambashare. When it asks for credentials, click on guest.
+ NOTE: To Ping Dell and Mac: type ping 192.168.2.5 from your laptop and ping 192.168.2.6 from the Dell 
+4) Have the MR tech connect the scanner to the neurofeedback laptop's samba share. From File Explorer, right-click on This PC, then select Add A Network Location. Follow the directions to enter the samba share address: //192.168.2.5/sambashare. When it asks for credentials, click on guest.
 • After it is set up once, you should be able to click on it in the left sidebar, but you may have to go through this setup again if it gets deleted from the scanner console.
-4) To test the connection with the scanner, type ```ping 192.168.2.1``` from the neurofeedback laptop.
+5) To test the connection with the scanner, type ```ping 192.168.2.1``` from the neurofeedback laptop.
 
 ## Set up stimulus presentation
 1) Once you plug the laptop into the LCD monitor, you should be able to use the laptop screen while projecting the stimuli onto the LCD. However, this has posed some problems. If it does, set your display to 'mirror'. The script should work now, but the participant will be able to see anything you are seeing on the laptop screen.
