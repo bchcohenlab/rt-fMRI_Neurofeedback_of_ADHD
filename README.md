@@ -43,13 +43,13 @@ ANALYSIS_LISTENER: runs on machine that runs presentation software (i.e., person
 
 ## Preparing rt-Cloud and PsychoPy 
 ### Extra stuff: 
-### #docker run -it –rm –link-local-ip=192.168.2.5 -p 8888:8888 -v ~/certs:/rtcloud/certs -v $PROJ_DIR:/rt-cloud/projects/adhd_rt brainiak/rtcloud:latest scripts/data_analyser.sh -p
+### The neurofeedback laptop has an alias set up to run this step, so you should only have to type ```analyse```. However, if this command doesn't work, type:
+### docker run -it –rm –link-local-ip=192.168.2.5 -p 8888:8888 -v ~/certs:/rtcloud/certs -v $PROJ_DIR:/rt-cloud/projects/adhd_rt brainiak/rtcloud:latest scripts/data_analyser.sh -p
 ### adhd_rt –subjectRemote –dataRemote
 You can set up the rt-cloud connections while the MR tech is running the anatomical scans. To do this:
 1) Neurofeedback laptop: ``` sudo smbd nmbd start ```
 
 2) Start DATA_ANALYSER on neurofeedback laptop:
-   - The neurofeedback laptop has an alias set up to run this step, so you should only have to type ```analyse```. However, if this command doesn't work, type:
    ``` 
    PROJ_DIR=/home/rt/rtcloud-projects/adhd_rt/
    docker run -it --rm --link-local-ip=192.168.2.5 -p 8888:8888 --cap-add=SYS_ADMIN -v ~/certs:/rt-cloud/certs -v /home/rt/rt-cloud/projects/adhd_rt:/rt-cloud/projects/adhd_rt -v /home/rt/sambashare:/home/rt/sambashare julianawall/adhd_rtcloud scripts/data_analyser.sh -p adhd_rt --subjectRemote
