@@ -49,7 +49,8 @@ You can set up the rt-cloud connections while the MR tech is running the anatomi
    - The neurofeedback laptop has an alias set up to run this step, so you should only have to type ```analyse```. However, if this command doesn't work, type:
    ``` 
    PROJ_DIR=/home/rt/rtcloud-projects/adhd_rt/
-   docker run -it –rm –link-local-ip=192.168.2.5 -p 8888:8888 -v ~/certs:/rtcloud/certs -v $PROJ_DIR:/rt-cloud/projects/adhd_rt brainiak/rtcloud:latest scripts/data_analyser.sh -p  
+   #docker run -it –rm –link-local-ip=192.168.2.5 -p 8888:8888 -v ~/certs:/rtcloud/certs -v $PROJ_DIR:/rt-cloud/projects/adhd_rt brainiak/rtcloud:latest scripts/data_analyser.sh -p
+   docker run -it --rm --link-local-ip=192.168.2.5 -p 8888:8888 --cap-add=SYS_ADMIN -v ~/certs:/rt-cloud/certs -v /home/rt/rt-cloud/projects/adhd_rt:/rt-cloud/projects/adhd_rt -v /home/rt/sambashare:/home/rt/sambashare julianawall/adhd_rtcloud scripts/data_analyser.sh -p adhd_rt --subjectRemote
    adhd_rt –subjectRemote –dataRemote
    ```
 • This should pop up a link that you can click on, which will bring you to the login page. Enter username and password, then, in the second tab, click "initialize session". 
