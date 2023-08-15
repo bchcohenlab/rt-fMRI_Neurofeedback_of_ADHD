@@ -85,7 +85,7 @@ To start the task, type:
 conda activate rtcloud
 psychopy 
 ```
-and start MSIT_neurofeedback.py from the app. 
+and start MSIT_neurofeedback.py from the app. Make sure to check which monitor is selected. 
 
 2) After the MSIT is a resting-state scan. Make sure to repeat this step for each resting-state scan throughout the session. 
  - start rest.py from PsychoPy app
