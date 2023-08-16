@@ -42,19 +42,22 @@ ANALYSIS_LISTENER: runs on machine that runs presentation software (i.e., person
 ![Picture1](https://github.com/bchcohenlab/rt-fMRI_Neurofeedback_of_ADHD/assets/88854051/2569af92-8cf1-4a7e-9022-3bb343de786e)
 
 ## Preparing rt-Cloud and PsychoPy 
-### Extra stuff: 
-### The neurofeedback laptop has an alias set up to run this step, so you should only have to type ```analyse```. However, if this command doesn't work, type:
-### docker run -it –rm –link-local-ip=192.168.2.5 -p 8888:8888 -v ~/certs:/rtcloud/certs -v $PROJ_DIR:/rt-cloud/projects/adhd_rt brainiak/rtcloud:latest scripts/data_analyser.sh -p
-### adhd_rt –subjectRemote –dataRemote
+
 You can set up the rt-cloud connections while the MR tech is running the anatomical scans. To do this:
 1) Neurofeedback laptop: ``` sudo smbd nmbd start ```
 
 2) Start DATA_ANALYSER on neurofeedback laptop:
+The neurofeedback laptop has an alias set up to run this step, so you should only have to type ```analyse```. However, if this command doesn't work, type:
    ``` 
    PROJ_DIR=/home/rt/rtcloud-projects/adhd_rt/
    docker run -it --rm --link-local-ip=192.168.2.5 -p 8888:8888 --cap-add=SYS_ADMIN -v ~/certs:/rt-cloud/certs -v /home/rt/rt-cloud/projects/adhd_rt:/rt-cloud/projects/adhd_rt -v /home/rt/sambashare:/home/rt/sambashare julianawall/adhd_rtcloud scripts/data_analyser.sh -p adhd_rt --subjectRemote
-   
    ```
+   or
+   ```
+      PROJ_DIR=/home/rt/rtcloud-projects/adhd_rt/
+      docker run -it –rm –link-local-ip=192.168.2.5 -p 8888:8888 -v ~/certs:/rtcloud/certs -v $PROJ_DIR:/rt-cloud/projects/adhd_rt brainiak/rtcloud:latest scripts/data_analyser.sh -p adhd_rt –subjectRemote –dataRemote
+   ```
+   If you get errors around this step or a little later, it would be good to check what is going on in this step and look for errors here.
 • This should pop up a link that you can click on, which will bring you to the login page. Enter username and password, then, in the second tab, click "initialize session". 
 
 4) Start ANALYSIS_LISTENER on stimulus laptop:
