@@ -58,6 +58,7 @@ The neurofeedback laptop has an alias set up to run this step, so you should onl
       docker run -it –rm –link-local-ip=192.168.2.5 -p 8888:8888 -v ~/certs:/rtcloud/certs -v $PROJ_DIR:/rt-cloud/projects/adhd_rt brainiak/rtcloud:latest scripts/data_analyser.sh -p adhd_rt –subjectRemote –dataRemote
    ```
    If you get errors around this step or a little later, it would be good to check what is going on in this step and look for errors here.
+
 • This should pop up a link that you can click on, which will bring you to the login page. Enter username and password, then, in the second tab, click "initialize session". 
 
 4) Start ANALYSIS_LISTENER on stimulus laptop:
