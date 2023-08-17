@@ -113,6 +113,8 @@ and start MSIT_neurofeedback.py from the app. Make sure to check which monitor i
 
    2) Click 'run' in the web interface on the neurofeedback laptop. The script will start when it sees the first DICOM image.
 
+   NOTE: Change the run number from 1 to 2 to 3 depending on which run it is
+
 ## Ending a session
 After all 3 runs are finished for the session, click "finalize session" in the web browser.
 
