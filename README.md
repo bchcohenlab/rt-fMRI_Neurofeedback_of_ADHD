@@ -35,7 +35,8 @@ ANALYSIS_LISTENER: runs on machine that runs presentation software (i.e., person
 5) To test the connection with the scanner, type ```ping 192.168.2.1``` from the neurofeedback laptop.
 
 ## Set up stimulus presentation
-1) Once you plug the laptop into the LCD monitor, you should be able to use the laptop screen while projecting the stimuli onto the LCD. However, this has posed some problems. If it does, set your display to 'mirror'. The script should work now, but the participant will be able to see anything you are seeing on the laptop screen.
+1) Plug the "Research Computer(?)" LCD Monitor Cord into the computer and click the "Research Computer" Button on the Box next to the Cord. 
+2) Once you plug the laptop into the LCD monitor, you should be able to use the laptop screen while projecting the stimuli onto the LCD. However, this has posed some problems. If it does, set your display to 'mirror'. The script should work now, but the participant will be able to see anything you are seeing on the laptop screen.
 
 # Scanning Protocol
 ### Sequence of Events: Task-Based Scans
