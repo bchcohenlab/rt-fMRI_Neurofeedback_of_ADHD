@@ -84,6 +84,7 @@ Also, in the righthand corner of the web interface, you should see 'subjConn: co
   ```
 
 ## Running fMRI Scans (MSIT, resting-state, and neurofeedback)
+**1. start psychopy, 2. participant reads instructions and presses button, 3. then scanner can be started**
 1) The first task-based scan is the multi-source interference task (MSIT). The stimuli for this task will be presented using PsychoPy.
 To start the task, type:
 ``` 
