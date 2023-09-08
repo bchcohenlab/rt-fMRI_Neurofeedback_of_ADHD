@@ -26,6 +26,7 @@ ANALYSIS_LISTENER: runs on machine that runs presentation software (i.e., person
 •	Listens for results from DATA_ANALYSER to inform experiment presentation (i.e., from PsychoPy)
 
 # Equipment Setup
+
 ## Set up necessary connections
 1) Connect the neurofeedback and stimulus laptops to the two ethernet cables that are at the scanner. If you haven't set up the ethernet connections in the past, configure them manually in your laptop's settings, making sure the IP address is set to 192.168.2.6 and the net mask is 255.255.255.240.
 2) Make sure the IP addresses are 192.168.2.5 for the neurofeedback laptop and 192.168.2.6 for the stimulus laptop. The scanner's IP address should always be 192.168.2.1. To check the IP address on Ubuntu, type: ```ifconfig``` and to check on Mac, type: ```ipconfig```.
@@ -35,8 +36,13 @@ ANALYSIS_LISTENER: runs on machine that runs presentation software (i.e., person
 5) To test the connection with the scanner, type ```ping 192.168.2.1``` from the neurofeedback laptop.
 
 ## Set up stimulus presentation
-1) Plug the "Research Computer(?)" LCD Monitor Cord into the computer and click the "Research Computer" Button on the Box next to the Cord. 
-2) Once you plug the laptop into the LCD monitor, you should be able to use the laptop screen while projecting the stimuli onto the LCD. However, this has posed some problems. If it does, set your display to 'mirror'. The script should work now, but the participant will be able to see anything you are seeing on the laptop screen.
+## Button Box Setup
+1) Plug the "Research Computer" LCD Monitor Cord into the computer and click the "Research Computer" Button on the Box next to the Cord.
+2) Click Research PC Button (Push down 1-2 seconds, wait a few seconds), make sure all three lights (keyboard, audio, cable) transfer
+3) Make sure that NNL (Button Box): go to Options-> slice = 364, Trigger = 1, USB Mode = "HID"
+4) Hit Start, should see screen with brain
+
+NOTE: Once you plug the laptop into the LCD monitor, you should be able to use the laptop screen while projecting the stimuli onto the LCD. However, this has posed some problems. If it does, set your display to 'mirror'. The script should work now, but the participant will be able to see anything you are seeing on the laptop screen.
 
 # Scanning Protocol
 ### Sequence of Events: Task-Based Scans
@@ -82,9 +88,14 @@ Also, in the righthand corner of the web interface, you should see 'subjConn: co
   conda activate rtcloud
   psychopy
   ```
-
+**Note: Make sure to stay in Psychopy window, do not navigate away from screen**
 ## Running fMRI Scans (MSIT, resting-state, and neurofeedback)
 **1. start psychopy, 2. participant reads instructions and presses button, 3. then scanner can be started**
+Right Thumb = volume up (regardless of keyboard)
+Right Index Finger = c
+Left Thumb = a 
+Left Index Finger = b
+
 1) The first task-based scan is the multi-source interference task (MSIT). The stimuli for this task will be presented using PsychoPy.
 To start the task, type:
 ``` 
@@ -93,7 +104,9 @@ psychopy
 ```
 and start MSIT_neurofeedback.py from the app. Make sure to check which monitor is selected. 
 
-2) After the MSIT is a resting-state scan. Make sure to repeat this step for each resting-state scan throughout the session. 
+**Note: Have every component / machine listening and ready for the scanner before having the MRI Tech start the scanner.** 
+
+2) After the MSIT is a resting-state scan. **Press "a" to end instructions screen, and have it wait for scanner"** Make sure to repeat this step for each resting-state scan throughout the session. 
  - start rest.py from PsychoPy app
 
 3) During the first resting state, run the MSIT ACC localizer script on the neurofeedback laptop:
