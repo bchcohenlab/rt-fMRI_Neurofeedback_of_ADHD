@@ -69,7 +69,7 @@ not the position, of the differing number."""
 task_instructions6 = """\
 The values corresponding to the buttons are:"""
 task_instructions7 = """\
-left index finger = 1, either thumb = 2,"""
+left index finger = 1, left thumb = 2,"""
 task_instructions8= """\
 and right index finger = 3"""
 task_instructions9 = """\
