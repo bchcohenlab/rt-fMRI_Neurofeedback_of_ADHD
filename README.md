@@ -119,7 +119,7 @@ and start MSIT_neurofeedback.py from the app. Make sure to check which monitor i
    ```
    python3 msit_preproc_script.py {subject id}
    or
-   python3 /home/rt/rt-fMRI_Neurofeedback_of_ADHD/adhd_rt/msit_preproc_script.py
+   python3 /home/rt/rt-fMRI_Neurofeedback_of_ADHD/adhd_rt/msit_preproc_script.py {subject id}
    ```
  - Before moving on, it is a good idea to check that the mask looks okay. Pull up the new mask in FSLeyes with the functional data as the background.
    
