@@ -117,7 +117,7 @@ and start MSIT_neurofeedback.py from the app. Make sure to check which monitor i
    ```
  - Then type the following command to run the localizer script on this data.   
    ```
-   python3 msit_acc_localizer.py {subject id}
+   python3 msit_preproc_script.py {subject id}
    ```
  - Before moving on, it is a good idea to check that the mask looks okay. Pull up the new mask in FSLeyes with the functional data as the background.
    
