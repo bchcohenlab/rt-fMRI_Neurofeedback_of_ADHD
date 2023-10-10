@@ -38,8 +38,8 @@ ANALYSIS_LISTENER: runs on machine that runs presentation software (i.e., person
 ## Set up stimulus presentation
 ## Button Box Setup
 1) Plug the "Research Computer" LCD Monitor Cord into the computer and click the "Research Computer" Button on the Box next to the Cord.
-2) Click Research PC Button (Push down 1-2 seconds, wait a few seconds), make sure all three lights (keyboard, audio, cable) transfer
-3) Make sure that NNL (Button Box): go to Options-> slice = 364, Trigger = 1, USB Mode = "HID"
+2) Click Research PC Button (Push down 1-2 seconds, wait a few seconds), make sure all three lights (keyboard, audio, cable) transfer. The top button can be yellow, the bottom two must be green. 
+3) Make sure that NNL (Button Box): go to Options-> slices = 1, Trigger = 1, volumes = 364, USB Mode = "HID"
 4) Hit Start, should see screen with brain
 
 NOTE: Once you plug the laptop into the LCD monitor, you should be able to use the laptop screen while projecting the stimuli onto the LCD. However, this has posed some problems. If it does, set your display to 'mirror'. The script should work now, but the participant will be able to see anything you are seeing on the laptop screen.
