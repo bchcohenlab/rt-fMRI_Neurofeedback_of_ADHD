@@ -134,12 +134,19 @@ Start by converting the DICOMs to nifti:
    dcm2niix /home/rt/sambashare/{DICOM directory}
    ```
 
-Then type the following command to run the localizer script on this data.   
+To localize the subject's anterior cingulate cortex, type ``` localize_acc ```.
+if the acc localizer doesn't work, try: 
    ```
-   python3 msit_preproc_script.py {subject id}
-   or
    python3 /home/rt/rt-fMRI_Neurofeedback_of_ADHD/adhd_rt/msit_preproc_script.py {subject id}
    ```
+
+To localize the subject's motor cortex, type ``` localize_motor ```. 
+if the motor localizer doesn't work, try: 
+   ```
+   python3 /home/rt/rt-fMRI_Neurofeedback_of_ADHD/adhd_rt/msit_preproc_script_motor_cortex.py {subject id}
+   ```
+
+
  - Before moving on, it is a good idea to check that the mask looks okay. Pull up the new mask in FSLeyes with the functional data as the background.
    
 ** Note: The MSIT will be repeated at the end, but you don't need to run this script the second time. 
