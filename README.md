@@ -107,6 +107,11 @@ Left Index Finger = b
 
 1) The first task-based scan is the multi-source interference task (MSIT). The stimuli for this task will be presented using PsychoPy.
 To start the task, type:
+
+```
+psychopy
+```
+if the above alias doesn't work, do:
 ``` 
 conda activate rtcloud
 psychopy 
