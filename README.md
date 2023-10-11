@@ -89,6 +89,8 @@ Also, in the righthand corner of the web interface, you should see 'subjConn: co
 
 4) Start PsychoPy on Macbook:
 • In a new terminal:
+ ``` psychopy ```
+if this alias doesnt work, do:
   ```
   conda activate rtcloud
   psychopy
