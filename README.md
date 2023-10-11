@@ -120,7 +120,7 @@ and start MSIT_neurofeedback.py from the app. Make sure to check which monitor i
 
 **Note: Have every component / machine listening and ready for the scanner before having the MRI Tech start the scanner.** 
 
-2) After the MSIT is a resting-state scan. **Press "a" to end instructions screen, and have it wait for scanner"** Make sure to repeat this step for each resting-state scan throughout the session. 
+2) After the MSIT is a resting-state scan. **Press "a" to end instructions screen, and have it wait for scanner** Make sure to repeat this step for each resting-state scan throughout the session. 
  - start rest.py from PsychoPy app
 
 3) During the first resting state, run the MSIT ACC localizer script on the neurofeedback laptop:
