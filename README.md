@@ -51,10 +51,10 @@ NOTE: Once you plug the laptop into the LCD monitor, you should be able to use t
 ## Preparing rt-Cloud and PsychoPy 
 
 You can set up the rt-cloud connections while the MR tech is running the anatomical scans. To do this:
-1) On the Dell (Neurofeedback) laptop, type ``` start ```. This is an alias- if it doesn't work, type: ``` sudo smbd nmbd start ```
+1) On the Dell (Neurofeedback) laptop, type ``` start ``` in Terminal. If this alias doesn't work, type: ``` sudo smbd nmbd start ```
 
-3) Start DATA_ANALYSER on neurofeedback laptop:
-The neurofeedback laptop has an alias set up to run this step, so you should only have to type ```analyse```. However, if this command doesn't work, type:
+2) Start DATA_ANALYSER on neurofeedback laptop:
+The neurofeedback laptop has an alias set up to run this step, so you should only have to type ```analyse```. However, if this command doesn't work, try typing:
    ``` 
    PROJ_DIR=/home/rt/rtcloud-projects/adhd_rt/
    docker run -it --rm --link-local-ip=192.168.2.5 -p 8888:8888 --cap-add=SYS_ADMIN -v ~/certs:/rt-cloud/certs -v /home/rt/rt-cloud/projects/adhd_rt:/rt-cloud/projects/adhd_rt -v /home/rt/sambashare:/home/rt/sambashare julianawall/adhd_rtcloud scripts/data_analyser.sh -p adhd_rt --subjectRemote
@@ -68,7 +68,12 @@ The neurofeedback laptop has an alias set up to run this step, so you should onl
 
 • This should pop up a link that you can click on, which will bring you to the login page. Enter username and password, then, in the second tab, click "initialize session". 
 
-4) Start ANALYSIS_LISTENER on stimulus laptop:
+3) Start ANALYSIS_LISTENER on stimulus laptop:
+
+  ``` listener ``` 
+  
+  if that doesn't work, do these four commands in order: 
+
   ```
   WEB_IP=192.168.2.5
   conda activate rtcloud
@@ -82,7 +87,7 @@ Connected to: wss://192.168.2.5:8888/wsSubject
 ```
 Also, in the righthand corner of the web interface, you should see 'subjConn: connected'
 
-5) Start PsychoPy on Macbook:
+4) Start PsychoPy on Macbook:
 • In a new terminal:
   ```
   conda activate rtcloud
