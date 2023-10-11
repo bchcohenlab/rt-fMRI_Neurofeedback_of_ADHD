@@ -123,13 +123,18 @@ and start MSIT_neurofeedback.py from the app. Make sure to check which monitor i
 2) After the MSIT is a resting-state scan. **Press "a" to end instructions screen, and have it wait for scanner** Make sure to repeat this step for each resting-state scan throughout the session. 
  - start rest.py from PsychoPy app
 
-3) During the first resting state, run the MSIT ACC localizer script on the neurofeedback laptop:
- - Start by converting the DICOMs to nifti. Copy the name of the directory with the DICOMs, then type this command:
+3) During the first resting state, run the MSIT ACC localizer script on the neurofeedback laptop.
+
+Start by converting the DICOMs to nifti:
+- type ``` nifti ``` into a terminal. It will ask you to either chose from a list of directories in the sambashare folder (most recent first) or provide the name of the directory yourself.
+- If this doesn't work:
+  Copy the name of the directory with the DICOMs, then type this command:
    ```
    conda activate rtcloud
    dcm2niix /home/rt/sambashare/{DICOM directory}
    ```
- - Then type the following command to run the localizer script on this data.   
+
+Then type the following command to run the localizer script on this data.   
    ```
    python3 msit_preproc_script.py {subject id}
    or
