@@ -189,6 +189,7 @@ frameN = -1
 # --- Run Routine "fixation" ---
 while continueRoutine and routineTimer.getTime() < 300:
     # get current time
+    #edited by MW 10/11
     t = routineTimer.getTime()
     tThisFlip = win.getFutureFlipTime(clock=routineTimer)
     tThisFlipGlobal = win.getFutureFlipTime(clock=None)
