@@ -168,6 +168,7 @@ if trigger_key_resp.keys in ['', [], None]:  # No response was made
 routineTimer.reset()
 
 # --- Prepare to start Routine "fixation" ---
+routineTimer.reset()  # added by MW 10/10
 continueRoutine = True
 routineForceEnded = False
 # update component parameters for each repeat
@@ -204,7 +205,7 @@ while continueRoutine and routineTimer.getTime() < 120:
         cross.setAutoDraw(True)
     if cross.status == STARTED:
         # is it time to stop? (based on global clock, using actual start)
-        if tThisFlipGlobal > cross.tStartRefresh + 30-frameTolerance:
+        if tThisFlipGlobal > cross.tStartRefresh + 120 -frameTolerance:
             # keep track of stop time/frame for later
             cross.tStop = t  # not accounting for scr refresh
             cross.frameNStop = frameN  # exact frame index
