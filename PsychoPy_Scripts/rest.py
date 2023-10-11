@@ -187,7 +187,7 @@ _timeToFirstFrame = win.getFutureFlipTime(clock="now")
 frameN = -1
 
 # --- Run Routine "fixation" ---
-while continueRoutine and routineTimer.getTime() < 120:
+while continueRoutine and routineTimer.getTime() < 300:
     # get current time
     t = routineTimer.getTime()
     tThisFlip = win.getFutureFlipTime(clock=routineTimer)
@@ -205,7 +205,7 @@ while continueRoutine and routineTimer.getTime() < 120:
         cross.setAutoDraw(True)
     if cross.status == STARTED:
         # is it time to stop? (based on global clock, using actual start)
-        if tThisFlipGlobal > cross.tStartRefresh + 120 -frameTolerance:
+        if tThisFlipGlobal > cross.tStartRefresh + 300 -frameTolerance:
             # keep track of stop time/frame for later
             cross.tStop = t  # not accounting for scr refresh
             cross.frameNStop = frameN  # exact frame index
