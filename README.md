@@ -51,9 +51,9 @@ NOTE: Once you plug the laptop into the LCD monitor, you should be able to use t
 ## Preparing rt-Cloud and PsychoPy 
 
 You can set up the rt-cloud connections while the MR tech is running the anatomical scans. To do this:
-1) Neurofeedback laptop: ``` sudo smbd nmbd start ```
+1) On the Dell (Neurofeedback) laptop, type ``` start ```. This is an alias- if it doesn't work, type: ``` sudo smbd nmbd start ```
 
-2) Start DATA_ANALYSER on neurofeedback laptop:
+3) Start DATA_ANALYSER on neurofeedback laptop:
 The neurofeedback laptop has an alias set up to run this step, so you should only have to type ```analyse```. However, if this command doesn't work, type:
    ``` 
    PROJ_DIR=/home/rt/rtcloud-projects/adhd_rt/
