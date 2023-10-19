@@ -25,6 +25,61 @@ DATA_ANALYSER: runs on machine that analyses data in real-time (i.e., the Dell l
 ANALYSIS_LISTENER: runs on machine that runs presentation software (i.e., personal laptop)
 •	Listens for results from DATA_ANALYSER to inform experiment presentation (i.e., from PsychoPy)
 
+ # Short Instructions 
+ ## Remember to do the MRI Screening form and symptom screening form
+ ## Test Connection
+  1. type ```pingdell``` from the Macbook
+  2. type ```pingmac``` from the Dell computer
+  3. to test the connection with the scanner, type ```ping 192.168.2.1``` from the neurofeedback laptop.
+
+ ## LCD Monitor Setup
+  1. Attach C2G extension cable to the research PC cord
+  2. Attach cord to Macbook
+  3. Click Research PC Button (Push down 1-2 seconds, wait a few seconds), make sure all three lights (keyboard, audio, cable) transfer.
+    - The top button can be yellow, the bottom two must be green.
+    
+ ## Button Box Setup 
+  1. slices = 1, Trigger = 1, volumes = 364, USB Mode = "HID"
+  2. everything is ‘1’
+  3. works for MSIT and NF
+  NOTE: quit after each run and restart, as number of volumes is higher than needed
+
+ ## Dell Computer Setup: 
+  1. Open Terminal
+  2. Type ```start``` and put in the password
+  3. Type ```analyse``` and click the link to open Docker
+
+ ## Mac Computer Setup: 
+  1. Open Terminal
+  2. After setting up Dell Computer, type ```listener```
+  3. In a new terminal, type ```psychopy```
+
+ ## Pre-MSIT 
+  1. Open ```msit_neurofeedback.py```
+  2. click play
+
+ ## Rest 
+  1. Quit button box and start again
+  2. start ```rest.py``` from PsychoPy app
+  3. during the first resting state, run the MSIT ACC localizer script on the neurofeedback laptop
+    a. type ``` nifti ``` into a terminal to convert the dicoms to nifti
+    b. type ``localize_acc```, ```localize_motor```, ```localize_motor_hotspot``` or any other localizer alias created
+
+ ## Neurofeedback
+  1. Quit button box and start again
+  2. Run the ```rt_feedback_single_roi.py``` script from the PsychoPy app.
+   - This script will begin as soon as it receives the first pulse from the scanner, and it will begin sending feedback as soon as it receives a  json file with the neurofeedback score.
+  3. Click 'run' in the web interface on the neurofeedback laptop. The script will start when it sees the first DICOM image.
+    
+  - NOTE: Change the run number from 1 to 2 to 3 depending on which run it is
+  - NOTE: Quit button box and start again after every run
+      
+## Ending a session
+After all 3 runs are finished for the session, click "finalize session" in the web browser.
+
+# ------------------------------------------
+# Longer Instructions 
+# ------------------------------------------
 # Equipment Setup
 
 ## Set up necessary connections
