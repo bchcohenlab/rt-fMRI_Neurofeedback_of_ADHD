@@ -73,6 +73,10 @@ ANALYSIS_LISTENER: runs on machine that runs presentation software (i.e., person
     
   - NOTE: Change the run number from 1 to 2 to 3 depending on which run it is
   - NOTE: Quit button box and start again after every run
+
+ ## Post-MSIT 
+  1. Open ```msit_neurofeedback.py```
+  2. click play
       
 ## Ending a session
 After all 3 runs are finished for the session, click "finalize session" in the web browser.
