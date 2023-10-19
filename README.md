@@ -63,7 +63,7 @@ ANALYSIS_LISTENER: runs on machine that runs presentation software (i.e., person
   2. start ```rest.py``` from PsychoPy app
   3. during the first resting state, run the MSIT ACC localizer script on the neurofeedback laptop
     a. type ``` nifti ``` into a terminal to convert the dicoms to nifti
-    b. type ``localize_acc```, ```localize_motor```, ```localize_motor_hotspot``` or any other localizer alias created
+    b. type ```localize_acc```, ```localize_motor```, ```localize_motor_hotspot``` or any other localizer alias created
 
  ## Neurofeedback
   1. Quit button box and start again
