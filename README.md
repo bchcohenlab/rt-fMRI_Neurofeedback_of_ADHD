@@ -27,6 +27,7 @@ ANALYSIS_LISTENER: runs on machine that runs presentation software (i.e., person
 
  # Short Instructions 
  ## Remember to do the MRI Screening form and symptom screening form
+ # NOTE: Restart Computer after plugging in
  ## Test Connection
   1. type ```pingdell``` from the Macbook
   2. type ```pingmac``` from the Dell computer
@@ -160,9 +161,9 @@ if this alias doesnt work, do:
 ## Running fMRI Scans (MSIT, resting-state, and neurofeedback)
 **1. start psychopy, 2. participant reads instructions and presses button, 3. then scanner can be started**
 Right Thumb = volume up (regardless of keyboard)
-Right Index Finger = c
-Left Thumb = a 
-Left Index Finger = b
+Right Index Finger = c, 1? 
+Left Thumb = a, 2?
+Left Index Finger = b, 3?
 
 1) The first task-based scan is the multi-source interference task (MSIT). The stimuli for this task will be presented using PsychoPy.
 To start the task, type:
