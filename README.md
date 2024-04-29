@@ -24,6 +24,7 @@ DATA_ANALYSER: runs on machine that analyses data in real-time (i.e., the Dell l
 
 ANALYSIS_LISTENER: runs on machine that runs presentation software (i.e., personal laptop)
 •	Listens for results from DATA_ANALYSER to inform experiment presentation (i.e., from PsychoPy)
+<img width="1004" alt="Screenshot 2024-04-29 at 8 07 16 AM" src="https://github.com/bchcohenlab/rt-fMRI_Neurofeedback_of_ADHD/assets/89412811/9432f12a-6dba-44e0-9b51-4a955428998d">
 
  # Short Instructions 
  ## Remember to do the MRI Screening form and symptom screening form
