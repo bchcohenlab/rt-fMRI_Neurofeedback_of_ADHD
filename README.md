@@ -161,9 +161,12 @@ if this alias doesnt work, do:
 ## Running fMRI Scans (MSIT, resting-state, and neurofeedback)
 **1. start psychopy, 2. participant reads instructions and presses button, 3. then scanner can be started**
 Right Thumb = volume up (regardless of keyboard)
-Right Index Finger = c, 1? 
-Left Thumb = a, 2?
-Left Index Finger = b, 3?
+Right Index Finger = c, 3 
+Left Thumb = a, 2
+Left Index Finger = b, 1
+<img width="1004" alt="Screenshot 2024-04-29 at 8 07 16 AM" src="https://github.com/bchcohenlab/rt-fMRI_Neurofeedback_of_ADHD/assets/89412811/d786267f-69f1-4d37-aa12-6fb33f56d4c8">
+
+
 
 1) The first task-based scan is the multi-source interference task (MSIT). The stimuli for this task will be presented using PsychoPy.
 To start the task, type:
