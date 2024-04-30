@@ -32,6 +32,7 @@ ANALYSIS_LISTENER: runs on machine that runs presentation software (i.e., person
  ## Connect Machines to Scanner 
   1. Connect Connection 1 Cable (NO ADAPTER) to the Dell Computer
   2. Connect Connection 2 w/ Adapter to the Mac Computer
+  
   Note: Don't Need to Use the Ethernet cable usually used to connect the two computers. 
  ## Test Connection
   1. type ```pingdell``` from the Macbook
