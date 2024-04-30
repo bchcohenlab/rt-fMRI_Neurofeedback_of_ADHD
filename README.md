@@ -29,10 +29,14 @@ ANALYSIS_LISTENER: runs on machine that runs presentation software (i.e., person
  # Short Instructions 
  ## Remember to do the MRI Screening form and symptom screening form
  # NOTE: Restart Computer after plugging in
+ ## Connect Machines to Scanner 
+  1. Connect Connection 1 Cable (NO ADAPTER) to the Dell Computer
+  2. Connect Connection 2 w/ Adapter to the Mac Computer
+  Note: Don't Need to Use the Ethernet cable usually used to connect the two computers. 
  ## Test Connection
   1. type ```pingdell``` from the Macbook
   2. type ```pingmac``` from the Dell computer
-  3. to test the connection with the scanner, type ```ping 192.168.2.1``` from the neurofeedback laptop.
+  3. to test the connection with the scanner, type ```ping 192.168.2.1``` or ```pingmri``` from the neurofeedback laptop.
 
  ## LCD Monitor Setup
   1. Attach C2G extension cable to the research PC cord
@@ -41,9 +45,10 @@ ANALYSIS_LISTENER: runs on machine that runs presentation software (i.e., person
     - The top button can be yellow, the bottom two must be green.
     
  ## Button Box Setup 
-  1. slices = 1, Trigger = 1, volumes = 364, USB Mode = "HID"
-  2. everything is ‘1’
-  3. works for MSIT and NF
+  1. slices = 1, Trigger = 1, volumes = 364
+  2. In Options Menu, set USB Mode = "HID" 
+  3. everything is ‘1’
+  4. works for MSIT and NF
   NOTE: quit after each run and restart, as number of volumes is higher than needed
 
  ## Dell Computer Setup: 
